@@ -72,6 +72,9 @@ public class JwtAuthenticator
         }
         return Optional.of(Identity.forUser(userMapping.mapUser(principal.get()))
                 .withPrincipal(new BasicPrincipal(principal.get()))
+                .withExtraCredentials(claims.entrySet().stream()
+                        .collect(Collectors.toMap(Map.Entry::getKey,entry -> entry.getValue().toString()))
+                )
                 .build());
     }
 
